@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Get Accuracy</title>
+  </head>
+  <body>
+    <h1>Get Accuracy</h1>
+    <form id="data-form">
+      <label for="input-data">Input Data:</label>
+      <textarea id="input-data" name="input-data" rows="10" cols="50"></textarea>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+    <br>
+    <h2>Accuracy:</h2>
+    <div id="accuracy"></div>
+
+    <script>
+      const form = document.getElementById('data-form');
+      const accuracyDiv = document.getElementById('accuracy');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const jsonData = {};
+        formData.forEach((value, key) => { jsonData[key] = value });
+        fetch('/accuracy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(jsonData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          accuracyDiv.innerHTML = `<p>Accuracy: ${data.acc}</p>`;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      });
+    </script>
+  </body>
+</html>
