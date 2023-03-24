@@ -66,7 +66,7 @@ def get_live_data(sd, ed):
 
 # Load the pickled model from file
 with open('model.pkl', 'rb') as f:
-model = pickle.load(f)
+    model = pickle.load(f)
 
 
 # In[26]:
